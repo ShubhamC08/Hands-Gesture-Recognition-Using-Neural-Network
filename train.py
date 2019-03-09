@@ -171,7 +171,7 @@ def train(num_iteration):
             epoch = int(i / int(data.train.num_examples/batch_size))    
             
             show_progress(epoch, feed_dict_tr, feed_dict_val, val_loss)
-            saver.save(session, 'C:/Users/Raj Shah/Downloads/AHD_Project/handgest_1') 
+            saver.save(session, './Workspace/Train_model') 
 
 
     total_iterations += num_iteration
