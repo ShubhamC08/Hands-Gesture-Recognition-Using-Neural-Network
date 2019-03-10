@@ -11,8 +11,8 @@ from numpy.random import seed
 seed()
 from tensorflow import set_random_seed
 set_random_seed(2)
-batch_size=32
-
+batch_size=100
+num_classes=10
 
 #Prepare input data
 classes=['Gesture-0','Gesture-1','Gesture-2','Gesture-3','Gesture-4','Gesture-5','Gesture-6','Gesture-7','Gesture-8','Gesture-9']
@@ -21,21 +21,25 @@ classes=['Gesture-0','Gesture-1','Gesture-2','Gesture-3','Gesture-4','Gesture-5'
 validation_size=0.2
 img_size=50
 num_channels=3
+<<<<<<< HEAD
 train_path='./Hands-Gesture-Recognition-Using-Neural-Network/Traindata'
+=======
+train_path='/home/snow/Workspace/Hands-Gesture-Recognition-Using-Neural-Network/Traindata'
+>>>>>>> f4a974ae037646cbd3f6bd7abbfc97bf1f542677
 
 #we shall load all the training and validation images and labels into memory using openCV and we use that during training
 data=dataset.read_train_sets(train_path,img_size,classes,validation_size=validation_size)
 print("Complete reading input data,will now print a snippet of it")
 print("Number of files in Training-set:\t\t{}".format(len(data.train.labels)))
 print("Number of files in validation-set:\t{}".format(len(data.valid.labels)))
-session=tf.Session()
+Session=tf.Session()
 
 #Input Layer
-x=tf.placeholder(tf.float32,shape=[None,img-size,num_channels],name='x')
+x=tf.placeholder(tf.float32,shape=[None,img_size,img_size,num_channels],name='x')
 
 #labels
 y_true=tf.placeholder(tf.float32,shape=[None,num_classes],name='actual_value')
-y_true_cls=tf.argmax(y_true,dimesion=1)
+y_true_cls=tf.argmax(y_true,dimension=1)
 
 #Network graph parameters
 filter_size_conv1=2
@@ -57,23 +61,27 @@ fc_layer_size=1024
 
 #Creating weights
 def create_weights(shape):
-	return tf.variable(tf.truncated_normal(shape,stddev=0.05))
+	return tf.Variable(tf.truncated_normal(shape,stddev=0.05))
 
 #Create biases
 def create_biases(size):
-	return tf.variable(tf.constant(0.05,shape=[size]))
+	return tf.Variable(tf.constant(0.05,shape=[size]))
 
 #Creating Convolution layer
 def create_convolution_layer(input,num_input_channels,conv_filter_size,num_filters):
 	#Weights
-	weights=create_weights(shape=[conv_filter_size,num_input_channels,num_filters])
+	weights=create_weights(shape=[conv_filter_size,conv_filter_size,num_input_channels,num_filters])
 	#Bias
 	bias=create_biases(num_filters)
-	#Convolutin layer
-	c=tf.nn.conv2d(input=input,filter=weights,stride=[1,1,1,1],padding='SAME')
+	#Convolution layer
+	c=tf.nn.conv2d(input=input,filter=weights,strides=[1,1,1,1],padding='SAME')
 	c+=bias
 	#Maxpooling layer
+<<<<<<< HEAD
 	s=tf.nn.maxpool(value=c,k_size=[1,2,2,1],strides=[1,2,2,1],padding='SAME')
+=======
+	s=tf.nn.max_pool(value=c,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME')
+>>>>>>> f4a974ae037646cbd3f6bd7abbfc97bf1f542677
 	#applying activation function Relu to max pooling output
 	layer=tf.nn.relu(s)
 	return layer
@@ -91,7 +99,7 @@ def create_flatten_layer(layer):
 #Creating fully-connected layer
 def create_fc_layer(input,num_inputs,num_outputs,use_relu=True):
 	#Defining trainable weights
-	weights=create_weights(shape=[num_input,num_output])
+	weights=create_weights(shape=[num_inputs,num_outputs])
 	#Defining the biases
 	bias=create_biases(num_outputs)
 	#Fully connected layer takes input x and produces wx+b.WE use matmul to multiply matrices
@@ -131,7 +139,7 @@ y_pred_cls=tf.argmax(y_pred,dimension=1) #Largest y_pred value classes,will be s
 Session.run(tf.global_variables_initializer())
 
 #Error calculation and learning
-cross_entropy=tf.nn.softmax_cross_entropy_with_logits(logits=layer_fc2,labels=y_true)
+cross_entropy=tf.nn.softmax_cross_entropy_with_logits_v2(logits=layer_fc2,labels=y_true)
 cost=tf.reduce_mean(cross_entropy)
 optimizer=tf.train.AdamOptimizer(learning_rate=0.01).minimize(cost)
 correct_prediction=tf.equal(y_pred_cls,y_true_cls)
@@ -141,8 +149,8 @@ Session.run(tf.global_variables_initializer())
 
 #Progress code
 def show_progress(epoch, feed_dict_train, feed_dict_validate, val_loss):
-    acc = session.run(accuracy, feed_dict=feed_dict_train)
-    val_acc = session.run(accuracy, feed_dict=feed_dict_validate)
+    acc = Session.run(accuracy, feed_dict=feed_dict_train)
+    val_acc = Session.run(accuracy, feed_dict=feed_dict_validate)
     msg = "Training Epoch {0} --- Training Accuracy: {1:>6.1%}, Validation Accuracy: {2:>6.1%},  Validation Loss: {3:.3f}"
     print(msg.format(epoch + 1, acc, val_acc, val_loss))
 
@@ -164,14 +172,18 @@ def train(num_iteration):
         feed_dict_val = {x: x_valid_batch,
                               y_true: y_valid_batch}
 
-        session.run(optimizer, feed_dict=feed_dict_tr)
+        Session.run(optimizer, feed_dict=feed_dict_tr)
 
         if i % int(data.train.num_examples/batch_size) == 0: 
-            val_loss = session.run(cost, feed_dict=feed_dict_val)
+            val_loss = Session.run(cost, feed_dict=feed_dict_val)
             epoch = int(i / int(data.train.num_examples/batch_size))    
             
             show_progress(epoch, feed_dict_tr, feed_dict_val, val_loss)
+<<<<<<< HEAD
             saver.save(session,'./Hands-Gesture-Recognition-Using-Neural-Network/Train_model') 
+=======
+            saver.save(Session, './Workspace/Train_model') 
+>>>>>>> f4a974ae037646cbd3f6bd7abbfc97bf1f542677
 
 
     total_iterations += num_iteration
