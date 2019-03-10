@@ -1,7 +1,7 @@
 import dataset
 import tensorflow as tf
 import time
-from datatime import delta
+from datetime import timedelta
 import math
 import random
 import numpy as np
@@ -21,10 +21,10 @@ classes=['Gesture-0','Gesture-1','Gesture-2','Gesture-3','Gesture-4','Gesture-5'
 validation_size=0.2
 img_size=50
 num_channels=3
-train_path='./Hands-Gesture-Recognition-Using-Neural-Network'
+train_path='./Hands-Gesture-Recognition-Using-Neural-Network/Traindata'
 
 #we shall load all the training and validation images and labels into memory using openCV and we use that during training
-data=dataset.read_train_set(train_path,img_size,classes,validation_size=validation_size)
+data=dataset.read_train_sets(train_path,img_size,classes,validation_size=validation_size)
 print("Complete reading input data,will now print a snippet of it")
 print("Number of files in Training-set:\t\t{}".format(len(data.train.labels)))
 print("Number of files in validation-set:\t{}".format(len(data.valid.labels)))
@@ -73,7 +73,7 @@ def create_convolution_layer(input,num_input_channels,conv_filter_size,num_filte
 	c=tf.nn.conv2d(input=input,filter=weights,stride=[1,1,1,1],padding='SAME')
 	c+=bias
 	#Maxpooling layer
-	s=tf.nn.maxpool(value=ci,k_size=[1,2,2,1],strides=[1,2,2,1],padding='SAME')
+	s=tf.nn.maxpool(value=c,k_size=[1,2,2,1],strides=[1,2,2,1],padding='SAME')
 	#applying activation function Relu to max pooling output
 	layer=tf.nn.relu(s)
 	return layer
@@ -171,7 +171,7 @@ def train(num_iteration):
             epoch = int(i / int(data.train.num_examples/batch_size))    
             
             show_progress(epoch, feed_dict_tr, feed_dict_val, val_loss)
-            saver.save(session, './Workspace/Train_model') 
+            saver.save(session,'./Hands-Gesture-Recognition-Using-Neural-Network/Train_model') 
 
 
     total_iterations += num_iteration
