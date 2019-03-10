@@ -73,11 +73,7 @@ def create_convolution_layer(input,num_input_channels,conv_filter_size,num_filte
 	c=tf.nn.conv2d(input=input,filter=weights,strides=[1,1,1,1],padding='SAME')
 	c+=bias
 	#Maxpooling layer
-<<<<<<< HEAD
-	s=tf.nn.maxpool(value=c,k_size=[1,2,2,1],strides=[1,2,2,1],padding='SAME')
-=======
 	s=tf.nn.max_pool(value=c,ksize=[1,2,2,1],strides=[1,2,2,1],padding='SAME')
->>>>>>> f4a974ae037646cbd3f6bd7abbfc97bf1f542677
 	#applying activation function Relu to max pooling output
 	layer=tf.nn.relu(s)
 	return layer
