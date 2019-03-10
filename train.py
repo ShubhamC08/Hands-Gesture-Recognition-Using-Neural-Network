@@ -21,11 +21,7 @@ classes=['Gesture-0','Gesture-1','Gesture-2','Gesture-3','Gesture-4','Gesture-5'
 validation_size=0.2
 img_size=50
 num_channels=3
-<<<<<<< HEAD
 train_path='./Hands-Gesture-Recognition-Using-Neural-Network/Traindata'
-=======
-train_path='/home/snow/Workspace/Hands-Gesture-Recognition-Using-Neural-Network/Traindata'
->>>>>>> f4a974ae037646cbd3f6bd7abbfc97bf1f542677
 
 #we shall load all the training and validation images and labels into memory using openCV and we use that during training
 data=dataset.read_train_sets(train_path,img_size,classes,validation_size=validation_size)
@@ -179,11 +175,7 @@ def train(num_iteration):
             epoch = int(i / int(data.train.num_examples/batch_size))    
             
             show_progress(epoch, feed_dict_tr, feed_dict_val, val_loss)
-<<<<<<< HEAD
             saver.save(session,'./Hands-Gesture-Recognition-Using-Neural-Network/Train_model') 
-=======
-            saver.save(Session, './Workspace/Train_model') 
->>>>>>> f4a974ae037646cbd3f6bd7abbfc97bf1f542677
 
 
     total_iterations += num_iteration

@@ -12,8 +12,11 @@ def load_train(train_path, image_size, classes):
     cls = []
 
     print('Going to read training images')
-    for fields in classes:   
+    for fields in classes: 
+	      #print(fields)  
         index = classes.index(fields)
+        print("index")
+	      #print(index)
         print('Now going to read {} files (Index: {})'.format(fields, index))
         path = os.path.join(train_path, fields, '*g')
         files = glob.glob(path)
@@ -33,7 +36,7 @@ def load_train(train_path, image_size, classes):
     labels = np.array(labels)
     img_names = np.array(img_names)
     cls = np.array(cls)
-
+    print(images,'/n',labels,'/n',img_names,'/n',cls)
     return images, labels, img_names, cls
 
 
