@@ -1,4 +1,4 @@
-import numpy as np
+"""import numpy as np
 import cv2
 import os
 import matplotlib.pyplot as plt
@@ -33,3 +33,5 @@ for features,labels in training_data:
   y.append(labels)
 X = np.array(X).reshape(-1,IMG_SIZE,IMG_SIZE,1)
 print(X.shape)
+
+"""
