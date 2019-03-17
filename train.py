@@ -141,6 +141,7 @@ fc2_layer_output = create_fc_layer(input=fc1_layer_output,num_inputs=fc_layer_si
 #predection
 y_pred = tf.nn.softmax(fc2_layer_output)
 y_pred_label = tf.argmax(y_pred,dimension=1)
+tf.Session(tf.global_variables_initializer())#new line
 
 #error calculation
 cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(logits=fc2_layer_output,labels=y)
