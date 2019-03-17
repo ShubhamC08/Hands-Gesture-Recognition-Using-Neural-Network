@@ -1,2 +1,2 @@
-model_checkpoint_path: "hgr_1"
-all_model_checkpoint_paths: "hgr_1"
+model_checkpoint_path: "model.ckpt"
+all_model_checkpoint_paths: "model.ckpt"

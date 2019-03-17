@@ -169,7 +169,8 @@ with tf.Session() as sess:
 			val_acc = sess.run(accuracy, feed_dict={X:X_validate_batch,y:y_validate_batch})
 			msg = "Training Epoch {0} --- Training Accuracy: {1:>6.1%}, Validation Accuracy: {2:>6.1%},  Validation Loss: {3:.3f}"
 			print(msg.format(epoch + 1, acc, val_acc, validate_loss))
-			saver.save(sess,'./hgr_1')
+			save_path=saver.save(sess,'./model.ckpt')
+			print("Nodel saved in path %s" %save_path)
 
 
 
