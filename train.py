@@ -140,7 +140,10 @@ fc2_layer_output = create_fc_layer(input=fc1_layer_output,num_inputs=fc_layer_si
 
 #predection
 y_pred = tf.nn.softmax(fc2_layer_output)
+print("y_pred ",y_pred)
+print("X ",X)
 y_pred_label = tf.argmax(y_pred,dimension=1)
+tf.Session().run(tf.global_variables_initializer())#new line
 
 #error calculation
 cross_entropy = tf.nn.softmax_cross_entropy_with_logits_v2(logits=fc2_layer_output,labels=y)
@@ -169,8 +172,8 @@ with tf.Session() as sess:
 			val_acc = sess.run(accuracy, feed_dict={X:X_validate_batch,y:y_validate_batch})
 			msg = "Training Epoch {0} --- Training Accuracy: {1:>6.1%}, Validation Accuracy: {2:>6.1%},  Validation Loss: {3:.3f}"
 			print(msg.format(epoch + 1, acc, val_acc, validate_loss))
-			save_path=saver.save(sess,'./model.ckpt')
-			print("Nodel saved in path %s" %save_path)
+	save_path=saver.save(sess,'./model.ckpt')
+	print("Nodel saved in path %s" %save_path)
 
 
 
