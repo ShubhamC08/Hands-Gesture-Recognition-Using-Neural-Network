@@ -154,8 +154,8 @@ init = tf.global_variables_initializer()
 saver =tf.train.Saver()
 
 ##Execution phase
-n_epoch = 1000
-batch_size = 20
+n_epoch = 10000
+batch_size = 50
 
 with tf.Session() as sess:
 	init.run()
